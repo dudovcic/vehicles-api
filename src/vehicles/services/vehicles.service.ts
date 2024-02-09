@@ -34,13 +34,11 @@ export class VehiclesService {
       this.getVehicleStateLog(vehicleId, time),
     ]);
 
-    const vehicleResponse: VehicleInfo = {
+    return {
       ...vehicle,
       state: vehicleStateLog.state,
       timeStamp: vehicleStateLog.timestamp,
     };
-
-    return vehicleResponse;
   }
 
   private async getVehicleStateLog(
