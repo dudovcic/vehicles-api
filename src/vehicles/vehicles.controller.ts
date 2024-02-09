@@ -13,7 +13,7 @@ class GetVehicleInfoParams {
   @IsNotEmpty()
   @IsDate()
   @Type(() => Date)
-  timestamp: Date;
+  timeStamp: Date;
 }
 
 @Controller('vehicles')
@@ -21,8 +21,8 @@ export class VehiclesController {
   constructor(private readonly vehiclesService: VehiclesService) {}
 
   @UseInterceptors(CacheInterceptor)
-  @Get('/:id/:timestamp')
+  @Get('/:id/:timeStamp')
   getVehicleInfo(@Param() params: GetVehicleInfoParams) {
-    return this.vehiclesService.getVehicleInfo(params.id, params.timestamp);
+    return this.vehiclesService.getVehicleInfo(params.id, params.timeStamp);
   }
 }

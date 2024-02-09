@@ -4,6 +4,7 @@ import { VehiclesService } from './services/vehicles.service';
 import { PrismaService } from 'src/shared/services/prisma.service';
 import { CacheModule } from '@nestjs/cache-manager';
 import { createMock } from '@golevelup/ts-jest';
+import { VehicleInfo } from './types/vehicle-info';
 
 describe('VehiclesController', () => {
   let sut: VehiclesController;
@@ -28,19 +29,19 @@ describe('VehiclesController', () => {
 
   describe('root', () => {
     it('should throw 500 if query fails', async () => {
-      const expected = {
+      const expected: VehicleInfo = {
         id: 1,
         model: 'Model',
         make: 'Golf',
         state: 'quoted',
-        timestamp: '2022-09-12 10:00:00+00',
+        timeStamp: '2022-09-12 10:00:00+00',
       };
       mockVehiclesService.getVehicleInfo.mockResolvedValueOnce(expected);
 
       expect(
         await sut.getVehicleInfo({
           id: 1,
-          timestamp: new Date('2022-09-12 10:00:00+00'),
+          timeStamp: new Date('2022-09-12 10:00:00+00'),
         }),
       ).toEqual(expected);
     });

@@ -73,7 +73,7 @@ describe('VehiclesController', () => {
         make: 'VW',
         model: 'Golf',
         state: 'selling',
-        timestamp: '2022-09-12 10:00:00+00',
+        timeStamp: '2022-09-12 10:00:00+00',
       });
     });
   });

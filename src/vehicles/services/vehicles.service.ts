@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/shared/services/prisma.service';
+import { VehicleInfo } from '../types/vehicle-info';
 
 interface StateLogModel {
   state: string;
@@ -16,7 +17,10 @@ interface StateLogModel {
 export class VehiclesService {
   constructor(private prismaService: PrismaService) {}
 
-  public async getVehicleInfo(vehicleId: number, timeStamp: Date) {
+  public async getVehicleInfo(
+    vehicleId: number,
+    timeStamp: Date,
+  ): Promise<VehicleInfo> {
     const time = new Date(timeStamp);
     const [vehicle, vehicleStateLog] = await Promise.all([
       this.prismaService.vehicles
@@ -30,10 +34,10 @@ export class VehiclesService {
       this.getVehicleStateLog(vehicleId, time),
     ]);
 
-    const vehicleResponse = {
+    const vehicleResponse: VehicleInfo = {
       ...vehicle,
       state: vehicleStateLog.state,
-      timestamp: vehicleStateLog.timestamp,
+      timeStamp: vehicleStateLog.timestamp,
     };
 
     return vehicleResponse;
