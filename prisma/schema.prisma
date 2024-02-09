@@ -1,0 +1,25 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-arm64-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model stateLogs {
+  vehicleId Int
+  state     String
+  timestamp DateTime @db.Timestamptz(6)
+
+  @@ignore
+}
+
+model vehicles {
+  id    Int    @id
+  make  String
+  model String
+  state String
+}
