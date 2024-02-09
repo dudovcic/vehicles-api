@@ -17,7 +17,7 @@ class GetVehicleInfoParams {
   timestamp: Date;
 }
 
-@Controller()
+@Controller('vehicles')
 export class VehiclesController {
   constructor(private readonly vehiclesService: VehiclesService) {}
 
