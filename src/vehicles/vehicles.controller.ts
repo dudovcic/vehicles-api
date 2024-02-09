@@ -1,6 +1,6 @@
 import { Controller, Get, Param, UseInterceptors } from '@nestjs/common';
 import { VehiclesService } from './services/vehicles.service';
-import { Transform, Type } from 'class-transformer';
+import { Type } from 'class-transformer';
 import { IsDate, IsInt, IsNotEmpty } from 'class-validator';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 
@@ -12,7 +12,6 @@ class GetVehicleInfoParams {
 
   @IsNotEmpty()
   @IsDate()
-  @Transform((v) => new Date(v.value))
   @Type(() => Date)
   timestamp: Date;
 }
