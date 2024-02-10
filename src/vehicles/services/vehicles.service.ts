@@ -7,10 +7,18 @@ import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/shared/services/prisma/prisma.service';
 import { VehicleInfo } from '../types/vehicle-info';
 import { StateLogModel } from '../types/state-log';
+import { LoggingService } from 'src/shared/services/logging/logging.servcie';
+import { Logger } from 'winston';
 
 @Injectable()
 export class VehiclesService {
-  constructor(private prismaService: PrismaService) {}
+  private logger: Logger;
+  constructor(
+    private prismaService: PrismaService,
+    loggingService: LoggingService,
+  ) {
+    this.logger = loggingService.getChildLogger(VehiclesService.name);
+  }
 
   public async getVehicleInfo(
     vehicleId: number,
@@ -24,9 +32,11 @@ export class VehiclesService {
           select: { id: true, make: true, model: true },
         })
         .catch(() => {
+          this.logger.error('no vehicles by id', vehicleId);
           throw new NotFoundException('Not found');
         }),
-      this.getVehicleStateLog(vehicleId, time).catch(() => {
+      this.getVehicleStateLog(vehicleId, time).catch((e) => {
+        this.logger.error('failed getting state log', e);
         throw new InternalServerErrorException();
       }),
     ]);

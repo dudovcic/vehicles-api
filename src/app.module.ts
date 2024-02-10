@@ -5,9 +5,12 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { AppController } from './app.controller';
 import { VehiclesModule } from './vehicles/vehicles.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { WinstonModule } from 'nest-winston';
+import { loggingConfig } from './shared/services/logging/confing';
 
 @Module({
   imports: [
+    WinstonModule.forRoot(loggingConfig),
     ConfigModule.forRoot({ isGlobal: true }),
     CacheModule.registerAsync<RedisClientOptions>({
       imports: [ConfigModule],
