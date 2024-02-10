@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
-import { PrismaService } from './shared/services/prisma.service';
+import { PrismaService } from './shared/services/prisma/prisma.service';
 import { CacheModule } from '@nestjs/cache-manager';
 
 describe('AppController', () => {

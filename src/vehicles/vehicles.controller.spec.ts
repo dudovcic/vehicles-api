@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { VehiclesController } from './vehicles.controller';
 import { VehiclesService } from './services/vehicles.service';
-import { PrismaService } from 'src/shared/services/prisma.service';
+import { PrismaService } from 'src/shared/services/prisma/prisma.service';
 import { CacheModule } from '@nestjs/cache-manager';
 import { createMock } from '@golevelup/ts-jest';
 import { VehicleInfo } from './types/vehicle-info';

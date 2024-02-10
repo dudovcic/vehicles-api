@@ -4,14 +4,9 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { PrismaService } from 'src/shared/services/prisma.service';
+import { PrismaService } from 'src/shared/services/prisma/prisma.service';
 import { VehicleInfo } from '../types/vehicle-info';
-
-interface StateLogModel {
-  state: string;
-  vehicleId: string;
-  timestamp: string;
-}
+import { StateLogModel } from '../types/state-log';
 
 @Injectable()
 export class VehiclesService {
@@ -31,7 +26,9 @@ export class VehiclesService {
         .catch(() => {
           throw new NotFoundException('Not found');
         }),
-      this.getVehicleStateLog(vehicleId, time),
+      this.getVehicleStateLog(vehicleId, time).catch(() => {
+        throw new InternalServerErrorException();
+      }),
     ]);
 
     return {
@@ -45,18 +42,14 @@ export class VehiclesService {
     vehicleId: number,
     time: Date,
   ): Promise<StateLogModel | null> {
-    const logs = await this.prismaService
-      .$queryRaw<StateLogModel[]>(
-        Prisma.sql`SELECT * FROM "stateLogs" WHERE "vehicleId" = ${vehicleId} AND "timestamp" <= ${time} ORDER BY timestamp DESC LIMIT 1`,
-      )
-      .catch(() => {
-        throw new InternalServerErrorException();
-      });
+    const stateLogs = await this.prismaService.$queryRaw<StateLogModel[]>(
+      Prisma.sql`SELECT * FROM "stateLogs" WHERE "vehicleId" = ${vehicleId} AND "timestamp" <= ${time} ORDER BY timestamp DESC LIMIT 1`,
+    );
 
-    if (!logs.length) {
+    if (!stateLogs.length) {
       return null;
     }
 
-    return logs[0];
+    return stateLogs[0];
   }
 }
