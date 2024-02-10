@@ -2,11 +2,13 @@ FROM node:18 as builder
 
 WORKDIR /api
 
-COPY package*.json ./api
+COPY package*.json ./
 
 RUN yarn install --frozen-lockfile
 
 COPY . .
+
+RUN npx prisma generate
 
 RUN npm run build
 
