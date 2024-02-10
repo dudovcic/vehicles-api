@@ -21,6 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@nestjs/cli": "^9.0.0",
     "@nestjs/cache-manager": "^2.2.1",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^3.2.0",
@@ -40,7 +41,6 @@
   },
   "devDependencies": {
     "@golevelup/ts-jest": "^0.4.0",
-    "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
     "@types/cache-manager-redis-store": "^2.0.4",
