@@ -6,7 +6,7 @@ import {
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/shared/services/prisma/prisma.service';
 import { VehicleInfo } from '../types/vehicle-info';
-import { StateLogModel } from '../types/state-log';
+import { StateLogModel } from '../types/state-log.model';
 import { LoggingService } from 'src/shared/services/logging/logging.servcie';
 import { Logger } from 'winston';
 
@@ -41,6 +41,10 @@ export class VehiclesService {
       }),
     ]);
 
+    if (!vehicleStateLog) {
+      throw new NotFoundException('No state log for vehicle');
+    }
+
     return {
       ...vehicle,
       state: vehicleStateLog.state,
@@ -51,7 +55,8 @@ export class VehiclesService {
   private async getVehicleStateLog(
     vehicleId: number,
     time: Date,
-  ): Promise<StateLogModel> {
+  ): Promise<StateLogModel | null> {
+    // Raw query as Prisma can't handle tables without a unique key
     const stateLogs = await this.prismaService.$queryRaw<StateLogModel[]>(
       Prisma.sql`SELECT * FROM "stateLogs" 
         WHERE "vehicleId" = ${vehicleId}
@@ -61,7 +66,7 @@ export class VehiclesService {
     );
 
     if (!stateLogs.length) {
-      throw new Error('No log');
+      return null;
     }
 
     return stateLogs[0];

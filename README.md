@@ -5,7 +5,9 @@
 
 ## Description
 
-API for querying vehicle info. Vehicles can be queries via REST endpoint with :id and :timestmap params. Queried info is cached into Redis ( default TTL 60sec ).
+API for querying vehicle info. Vehicles can be queried via REST endpoint with :id and :timestmap params. Queried info is cached into Redis ( default TTL 60sec ).
+
+`GET /vehicles/:vehicleId/:timestamp`
 
 Example:
 - GET http://localhost:3000/vehicles/3/2022-09-12 10:00:00+00

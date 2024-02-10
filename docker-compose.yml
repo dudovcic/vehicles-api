@@ -2,12 +2,15 @@ services:
   postgres:
     image: postgres
     container_name: postgres
-    ports:
-      - '5433:5432'
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile.db
       target: motorway-postgres
+    ports:
+      - "5433:5432"
+    networks:
+      - mnetwork
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
@@ -19,6 +22,8 @@ services:
       - "6379:6379"
     volumes:
       - cache:/data
+    networks:
+      - mnetwork
     environment:
       - REDIS_PASSWORD=password
       - REDIS_PORT=6379
@@ -29,6 +34,8 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: vehicles-api
+    networks:
+      - mnetwork
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
@@ -38,7 +45,10 @@ services:
     ports:
       - '3000:3000'
     volumes:
-      - ../src:/app/src
+      - ./src:/app/src
 volumes:
   cache:
     driver: local
+networks:
+  mnetwork:
+    driver: bridge
