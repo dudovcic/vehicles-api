@@ -22,6 +22,20 @@ Once the container is up you can reach the API on port 3000:
 - GET localhost:3000/vehicles/3/2022-09-12 10:00:00+00
 ```
 
+## Database migrations
+
+Prisma is used as an ORM, so migrations can be executed through it.
+
+ie. inside a pipeline, make sure DATABASE_URL env is set as in .env.example and run:
+```bash
+npx prisma migrate deploy
+```
+
+Locally in development run:
+```bash
+npx prisma migrate dev
+```
+
 # Local setup
 
 ## Installation
