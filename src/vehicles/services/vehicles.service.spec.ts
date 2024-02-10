@@ -8,11 +8,13 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
+import { LoggingService } from 'src/shared/services/logging/logging.servcie';
 
 describe('VehiclesController', () => {
   let sut: VehiclesService;
 
   let prismaMock = createMock<PrismaService>();
+  let mockLoggingService = createMock<LoggingService>();
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -20,12 +22,14 @@ describe('VehiclesController', () => {
       controllers: [VehiclesController],
       providers: [
         { provide: PrismaService, useValue: prismaMock },
+        { provide: LoggingService, useValue: mockLoggingService },
         VehiclesService,
       ],
     }).compile();
 
     sut = module.get(VehiclesController);
     prismaMock = module.get(PrismaService);
+    mockLoggingService = module.get(LoggingService);
   });
 
   describe('root', () => {

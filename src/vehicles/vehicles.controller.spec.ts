@@ -5,12 +5,14 @@ import { PrismaService } from 'src/shared/services/prisma/prisma.service';
 import { CacheModule } from '@nestjs/cache-manager';
 import { createMock } from '@golevelup/ts-jest';
 import { VehicleInfo } from './types/vehicle-info';
+import { LoggingService } from 'src/shared/services/logging/logging.servcie';
 
 describe('VehiclesController', () => {
   let sut: VehiclesController;
 
   let mockVehiclesService = createMock<VehiclesService>();
   let mpockPrismaService = createMock<PrismaService>();
+  let mockLoggingService = createMock<LoggingService>();
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -19,12 +21,14 @@ describe('VehiclesController', () => {
       providers: [
         { provide: PrismaService, useValue: mpockPrismaService },
         { provide: VehiclesService, useValue: mockVehiclesService },
+        { provide: LoggingService, useValue: mockLoggingService },
       ],
     }).compile();
 
     sut = module.get(VehiclesController);
     mockVehiclesService = module.get(VehiclesService);
     mpockPrismaService = module.get(PrismaService);
+    mockLoggingService = module.get(LoggingService);
   });
 
   describe('root', () => {
