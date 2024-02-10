@@ -51,7 +51,7 @@ export class VehiclesService {
   private async getVehicleStateLog(
     vehicleId: number,
     time: Date,
-  ): Promise<StateLogModel | null> {
+  ): Promise<StateLogModel> {
     const stateLogs = await this.prismaService.$queryRaw<StateLogModel[]>(
       Prisma.sql`SELECT * FROM "stateLogs" 
         WHERE "vehicleId" = ${vehicleId}
@@ -61,7 +61,7 @@ export class VehiclesService {
     );
 
     if (!stateLogs.length) {
-      return null;
+      throw new Error('No log');
     }
 
     return stateLogs[0];

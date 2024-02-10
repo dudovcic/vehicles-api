@@ -6,7 +6,7 @@ import { AppController } from './app.controller';
 import { VehiclesModule } from './vehicles/vehicles.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { WinstonModule } from 'nest-winston';
-import { loggingConfig } from './shared/services/logging/confing';
+import { loggingConfig } from './shared/services/logging/config';
 
 @Module({
   imports: [
