@@ -32,7 +32,7 @@ export class VehiclesService {
           select: { id: true, make: true, model: true },
         })
         .catch(() => {
-          this.logger.error('no vehicles by id', vehicleId);
+          this.logger.error('no vehicles found', { vehicleId });
           throw new NotFoundException('Not found');
         }),
       this.getVehicleStateLog(vehicleId, time).catch((e) => {
