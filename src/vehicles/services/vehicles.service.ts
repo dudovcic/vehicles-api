@@ -53,7 +53,11 @@ export class VehiclesService {
     time: Date,
   ): Promise<StateLogModel | null> {
     const stateLogs = await this.prismaService.$queryRaw<StateLogModel[]>(
-      Prisma.sql`SELECT * FROM "stateLogs" WHERE "vehicleId" = ${vehicleId} AND "timestamp" <= ${time} ORDER BY timestamp DESC LIMIT 1`,
+      Prisma.sql`SELECT * FROM "stateLogs" 
+        WHERE "vehicleId" = ${vehicleId}
+        AND "timestamp" <= ${time}
+        ORDER BY timestamp DESC
+        LIMIT 1`,
     );
 
     if (!stateLogs.length) {
