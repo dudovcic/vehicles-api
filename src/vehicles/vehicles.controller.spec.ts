@@ -32,7 +32,7 @@ describe('VehiclesController', () => {
   });
 
   describe('root', () => {
-    it('should throw 500 if query fails', async () => {
+    it('should return expected', async () => {
       const expected: VehicleInfo = {
         id: 1,
         model: 'Model',
@@ -43,10 +43,12 @@ describe('VehiclesController', () => {
       mockVehiclesService.getVehicleInfo.mockResolvedValueOnce(expected);
 
       expect(
-        await sut.getVehicleInfo({
-          id: 1,
-          timeStamp: new Date('2022-09-12 10:00:00+00'),
-        }),
+        await sut.getVehicleInfo(
+          {
+            id: 1,
+          },
+          { time: new Date('2022-09-12 10:00:00+00') },
+        ),
       ).toEqual(expected);
     });
   });

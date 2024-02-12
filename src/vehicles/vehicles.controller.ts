@@ -1,9 +1,12 @@
-import { Controller, Get, Param, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Param, Query, UseInterceptors } from '@nestjs/common';
 import { VehiclesService } from './services/vehicles.service';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 import { LoggingService } from 'src/shared/services/logging/logging.servcie';
 import { Logger } from 'winston';
-import { GetVehicleInfoParams } from './types/get-vehicles-info.request';
+import {
+  GetVehicleInfoRouteParams,
+  GetVehicleInfoQueryParams,
+} from './types/get-vehicles-info.request';
 
 @Controller('vehicles')
 export class VehiclesController {
@@ -16,9 +19,12 @@ export class VehiclesController {
   }
 
   @UseInterceptors(CacheInterceptor)
-  @Get('/:id/:timeStamp')
-  getVehicleInfo(@Param() params: GetVehicleInfoParams) {
+  @Get('/:id')
+  getVehicleInfo(
+    @Param() params: GetVehicleInfoRouteParams,
+    @Query() { time }: GetVehicleInfoQueryParams,
+  ) {
     this.logger.info('getting vehicle info');
-    return this.vehiclesService.getVehicleInfo(params.id, params.timeStamp);
+    return this.vehiclesService.getVehicleInfo(params.id, time);
   }
 }

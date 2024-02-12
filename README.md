@@ -10,7 +10,7 @@ API for querying vehicle info. Vehicles can be queried via REST endpoint with :i
 `GET /vehicles/:vehicleId/:timestamp`
 
 Example:
-- GET http://localhost:3000/vehicles/3/2022-09-12 10:00:00+00
+- GET http://localhost:3000/vehicles/3?time=2022-09-12T10:00:00Z
 
 
 ## Running the app via Docker
@@ -21,7 +21,7 @@ $ docker-compose up
 
 Once the container is up you can reach the API on port 3000:
 
-- GET localhost:3000/vehicles/3/2022-09-12 10:00:00+00
+- GET localhost:3000/vehicles/3?time=2022-09-12T10:00:00Z
 ```
 
 ## Database migrations

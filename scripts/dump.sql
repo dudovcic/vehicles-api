@@ -20,6 +20,9 @@ CREATE TABLE IF NOT EXISTS "stateLogs" (
   "timestamp" TIMESTAMP WITH TIME ZONE NOT NULL
 );
 
+-- CreateIndex
+CREATE INDEX "stateLogs_vehicleId_timestamp_idx" ON "stateLogs"("vehicleId", "timestamp");
+
 INSERT INTO "stateLogs" ("vehicleId", state, timestamp) VALUES (1, 'quoted',  '2022-09-10 10:23:54+00');
 INSERT INTO "stateLogs" ("vehicleId", state, timestamp) VALUES (2, 'quoted',  '2022-09-10 14:59:01+00');
 INSERT INTO "stateLogs" ("vehicleId", state, timestamp) VALUES (2, 'selling', '2022-09-11 17:03:17+00');

@@ -14,3 +14,6 @@ CREATE TABLE "vehicles" (
 
     CONSTRAINT "vehicles_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE INDEX "stateLogs_vehicleId_timestamp_idx" ON "stateLogs"("vehicleId", "timestamp");
